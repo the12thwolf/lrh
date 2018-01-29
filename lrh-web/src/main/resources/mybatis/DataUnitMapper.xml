@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ww.dao.DataUnitMapper">
+  <resultMap id="BaseResultMap" type="com.ww.domain.DataUnit">
+    <id column="dataUnitID" jdbcType="INTEGER" property="dataunitid" />
+    <result column="dataUnitName" jdbcType="VARCHAR" property="dataunitname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dataUnitID, dataUnitName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dataunit
+    where dataUnitID = #{dataunitid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dataunit
+    where dataUnitID = #{dataunitid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ww.domain.DataUnit">
+    insert into dataunit (dataUnitID, dataUnitName)
+    values (#{dataunitid,jdbcType=INTEGER}, #{dataunitname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ww.domain.DataUnit">
+    insert into dataunit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dataunitid != null">
+        dataUnitID,
+      </if>
+      <if test="dataunitname != null">
+        dataUnitName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dataunitid != null">
+        #{dataunitid,jdbcType=INTEGER},
+      </if>
+      <if test="dataunitname != null">
+        #{dataunitname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ww.domain.DataUnit">
+    update dataunit
+    <set>
+      <if test="dataunitname != null">
+        dataUnitName = #{dataunitname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dataUnitID = #{dataunitid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ww.domain.DataUnit">
+    update dataunit
+    set dataUnitName = #{dataunitname,jdbcType=VARCHAR}
+    where dataUnitID = #{dataunitid,jdbcType=INTEGER}
+  </update>
+</mapper>

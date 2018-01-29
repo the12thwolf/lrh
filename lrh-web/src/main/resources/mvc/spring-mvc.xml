@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--指明 controller 所在包，并扫描其中的注解-->
+    <context:component-scan base-package="com.ww.mvc.controller"/>
+    <mvc:resources mapping="/js/**" location="/WEB-INF/js/" cache-period="31556926"/>
+    <mvc:resources mapping="/styles/**" location="/WEB-INF/styles/"/>
+    <!-- 静态资源(js、image等)的访问 -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 开启注解 -->
+    <mvc:annotation-driven/>
+
+    <!--ViewResolver 视图解析器-->
+    <!--用于支持Servlet、JSP视图解析-->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="order" value="1"/>
+    </bean>
+    <!--第二个视图控制器-->
+    <bean id="userviewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="com.ww.mvc.resourceview.ResourceViewSelf"/>
+        <property name="order" value="0" />
+        <property name="prefix" value="/WEB-INF/user/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+    </bean>
+
+    <bean id="mainviewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="com.ww.mvc.resourceview.ResourceViewSelf"/>
+        <property name="order" value="0"/>
+        <property name="prefix" value="/WEB-INF/main/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+    </bean>
+
+    <bean id="dataManageviewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="com.ww.mvc.resourceview.ResourceViewSelf"/>
+        <property name="order" value="0"/>
+        <property name="prefix" value="/WEB-INF/dataManage/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+    </bean>
+
+    <!--配置拦截器,访问资源之前都判断是否身份过期，可以增加token验证，回去百度下-->
+    <mvc:interceptors>
+        <!--<mvc:interceptor>
+        <mvc:mapping path="*"/>
+        <mvc:exclude-mapping path="/login"/>    &lt;!&ndash; 不拦截登录请求 &ndash;&gt;
+        <mvc:exclude-mapping path="/user_login"/>
+        <mvc:exclude-mapping path="/user_toRegist"/>    &lt;!&ndash; 不拦截注册请求 &ndash;&gt;
+        <mvc:exclude-mapping path="*.jsp"/>
+        <mvc:exclude-mapping path="*.html"/>
+        <mvc:exclude-mapping path="*.js"/>
+        <mvc:exclude-mapping path="*.css"/>
+        <bean class="com.ww.interceptors.AccessInterceptor"></bean>
+    </mvc:interceptor>-->
+    <mvc:interceptor>
+        <mvc:mapping path="/**"/>
+        <mvc:exclude-mapping path="/login"/>    <!-- 不拦截登录请求 -->
+        <mvc:exclude-mapping path="/user_login"/>
+        <mvc:exclude-mapping path="/user_toRegist"/>    <!-- 不拦截注册请求 -->
+        <mvc:exclude-mapping path="/user_regist"/>    <!-- 不拦截注册请求 -->
+        <mvc:exclude-mapping path="/ajax/checkUserNameExist"/>    <!-- 不拦截注册请求 -->
+        <mvc:exclude-mapping path="*.jsp"/>
+        <mvc:exclude-mapping path="*.html"/>
+        <mvc:exclude-mapping path="*.js"/>
+        <mvc:exclude-mapping path="*.css"/>
+        <mvc:exclude-mapping path="/image/*"/>
+        <mvc:exclude-mapping path="/js/**"/>
+        <mvc:exclude-mapping path="/styles/**"/>
+        <mvc:exclude-mapping path="*.gif"/>
+        <mvc:exclude-mapping path="*.png"/>
+
+        <bean class="com.ww.interceptors.AccessInterceptorl"></bean>
+    </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:/conf/common.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties"/>
+    </bean>-->
+
+    <!--开发环境配置文件-->
+    <beans profile="development">
+        <context:property-placeholder location="classpath:/conf/dev/*.properties,classpath:conf/common.properties"/>
+        <!--<context:property-placeholder location="classpath:/conf/common.properties"/>-->
+        <!--location="属性文件，多个之间逗号分隔"-->
+    </beans>
+
+    <!-- 生产环境配置文件 -->
+    <beans profile="production">
+        <context:property-placeholder location="classpath:/conf/pro/*.properties,classpath:conf/common.properties"/>
+    </beans>
+
+    <!-- 与上面的配置等价，下面的更容易理解 -->
+    <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            &lt;!&ndash; PropertyPlaceholderConfigurer类中有个locations属性，接收的是一个数组，即我们可以在下面配好多个properties文件 &ndash;&gt;
+            <array>
+                <value>classpath:/conf/pro/*.properties</value>
+            </array>
+        </property>
+    </bean>-->
+
+</beans>
+
+
+
+
+
+
+
+
+
+

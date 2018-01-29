@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ww.dao.PaySubitemMapper">
+  <resultMap id="BaseResultMap" type="com.ww.domain.PaySubitem">
+    <id column="subitem_id" jdbcType="BIGINT" property="subitemId" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="subitem_name" jdbcType="VARCHAR" property="subitemName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    subitem_id, item_name, subitem_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from f_paysubitem
+    where subitem_id = #{subitemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from f_paysubitem
+    where subitem_id = #{subitemId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ww.domain.PaySubitem">
+    insert into f_paysubitem (subitem_id, item_name, subitem_name
+      )
+    values (#{subitemId,jdbcType=BIGINT}, #{itemName,jdbcType=VARCHAR}, #{subitemName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ww.domain.PaySubitem">
+    insert into f_paysubitem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subitemId != null">
+        subitem_id,
+      </if>
+      <if test="itemName != null">
+        item_name,
+      </if>
+      <if test="subitemName != null">
+        subitem_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subitemId != null">
+        #{subitemId,jdbcType=BIGINT},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="subitemName != null">
+        #{subitemName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ww.domain.PaySubitem">
+    update f_paysubitem
+    <set>
+      <if test="itemName != null">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="subitemName != null">
+        subitem_name = #{subitemName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where subitem_id = #{subitemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ww.domain.PaySubitem">
+    update f_paysubitem
+    set item_name = #{itemName,jdbcType=VARCHAR},
+      subitem_name = #{subitemName,jdbcType=VARCHAR}
+    where subitem_id = #{subitemId,jdbcType=BIGINT}
+  </update>
+  <!--从这里开始重复-->
+
+  <!--新增加的-->
+  <select id="selectPaySubitemTotalCountsByItemName" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select COUNT(*)
+    from f_paysubitem where
+    item_name = #{itemName,jdbcType=VARCHAR}
+  </select>
+
+
+
+  <select id="selectPaySubitemListLimitByItemName" parameterType="com.ww.domain.PaySubitemDataForPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from f_paysubitem WHERE
+    1=1
+    <if test="itemName != null">
+    and item_name = #{itemName,jdbcType=VARCHAR}
+    </if>
+    order by subitem_id desc
+    <if test="start !=0 or end!=0">
+      limit #{start},#{end}
+    </if>
+  </select>
+
+
+
+
+  <select id="selectByItemNameAndSubitemName" parameterType="com.ww.domain.PaySubitem" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from f_paysubitem WHERE
+    1=1
+    and item_name = #{itemName,jdbcType=VARCHAR}
+    and subitem_name = #{subitemName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectPaySubitemsByItemName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from f_paysubitem WHERE
+    item_name = #{itemName,jdbcType=VARCHAR}
+  </select>
+
+
+</mapper>

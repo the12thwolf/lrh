@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ww.dao.PayItemMapper">
+  <resultMap id="BaseResultMap" type="com.ww.domain.PayItem">
+    <id column="item_id" jdbcType="BIGINT" property="itemId" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    item_id, item_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from f_payitem
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from f_payitem
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ww.domain.PayItem">
+    insert into f_payitem (item_id, item_name)
+    values (#{itemId,jdbcType=BIGINT}, #{itemName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ww.domain.PayItem">
+    insert into f_payitem
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        item_id,
+      </if>
+      <if test="itemName != null">
+        item_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="itemId != null">
+        #{itemId,jdbcType=BIGINT},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ww.domain.PayItem">
+    update f_payitem
+    <set>
+      <if test="itemName != null">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ww.domain.PayItem">
+    update f_payitem
+    set item_name = #{itemName,jdbcType=VARCHAR}
+    where item_id = #{itemId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="selectPayItemListLimit" parameterType="com.ww.domain.DataForPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from f_payitem
+    order by item_id desc
+    <if test="start !=0 or end!=0">
+      limit #{start},#{end}
+    </if>
+  </select>
+
+  <select id="selectTotalCounts" resultType="java.lang.Integer">
+    select COUNT(*)
+    from f_payitem
+  </select>
+
+  <select id="selectPayItemByItemName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from f_payitem
+    where item_name = #{itemName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectPayItemListAll" parameterType="java.lang.Long"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from f_payitem order by item_id desc
+  </select>
+
+</mapper>

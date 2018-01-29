@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ww.dao.PayPersonMapper">
+  <resultMap id="BaseResultMap" type="com.ww.domain.PayPerson">
+    <id column="pay_person_id" jdbcType="INTEGER" property="payPersonId" />
+    <result column="pay_person_name" jdbcType="VARCHAR" property="payPersonName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pay_person_id, pay_person_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from f_payPerson
+    where pay_person_id = #{payPersonId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from f_payPerson
+    where pay_person_id = #{payPersonId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ww.domain.PayPerson">
+    insert into f_payPerson (pay_person_id, pay_person_name)
+    values (#{payPersonId,jdbcType=INTEGER}, #{payPersonName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ww.domain.PayPerson">
+    insert into f_payPerson
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="payPersonId != null">
+        pay_person_id,
+      </if>
+      <if test="payPersonName != null">
+        pay_person_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="payPersonId != null">
+        #{payPersonId,jdbcType=INTEGER},
+      </if>
+      <if test="payPersonName != null">
+        #{payPersonName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ww.domain.PayPerson">
+    update f_payPerson
+    <set>
+      <if test="payPersonName != null">
+        pay_person_name = #{payPersonName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pay_person_id = #{payPersonId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ww.domain.PayPerson">
+    update f_payPerson
+    set pay_person_name = #{payPersonName,jdbcType=VARCHAR}
+    where pay_person_id = #{payPersonId,jdbcType=INTEGER}
+  </update>
+
+
+
+  <select id="selectPayPersonListAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from f_payPerson
+  </select>
+
+
+
+
+
+
+</mapper>

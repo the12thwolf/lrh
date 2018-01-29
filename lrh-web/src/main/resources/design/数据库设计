@@ -1,0 +1,88 @@
+
+---------------------------------------------
+数据库名：lrh
+用户名 root 密码 root
+create database lrh default character set utf8 collate utf8_general_ci;
+
+----------------------------------------------
+模块划分
+1、系统登录注册等模块
+2、
+
+================================== f_user ====================
+user_id bigint 用户ID 主键 自增
+user_name varchar(200) 用户名 非空
+real_name varchar(200) 真实姓名
+password varchar(70) 密码
+rol_priv varchar(2) 系统角色，1-普通 2-系统管理员
+建表SQL
+create table f_user(
+user_id bigint primary key auto_increment,
+user_name varchar(200) not null,
+real_name varchar(200) not null,
+password varchar(100) not null,
+rol_priv varchar(2) not null default '1',
+constraint user_unique_userName unique(user_name)
+);
+
+
+=================================== ============
+
+=================================== 支出项目表 f_payitem ============
+item_id bigint 主键 自增
+item_name varchar(50),非空 项目名称
+建表sql
+create table f_payitem(
+item_id bigint primary key auto_increment  comment '主键',
+item_name varchar(50) not null comment '项目名称',
+constraint food_unq_foodName unique(item_name)
+);
+
+
+=================================== 支出用途 f_paysubitem ============
+subitem_id 主键 自增
+item_name  所属大类
+subitem_name 支出描述
+create table f_paysubitem(
+subitem_id bigint primary key auto_increment  comment '主键',
+item_name varchar(50) not null comment '所属大类',
+subitem_name varchar(100) not null comment '支出描述'
+);
+alter table f_paysubitem add constraint paysubitem_unq1 unique(item_name,subitem_name);
+================================ 支出明细 f_paydetai ==================
+【1】表结构说明
+pay_id bigint 主键，自增
+item_name  varchar(50),非空 支出项目名称
+subitem_name varchar(50) 支出用途
+pay_amount varchar(10) 支出金额 非空
+pay_date varchar(12) ,非空 支出时间
+pay_person varchar(5),非空，支出人员
+contant varchar(500) ,备注
+add_time timestamp,非空，添加时间
+
+【2】建表语句
+create table f_paydetai(
+pay_id bigint primary key auto_increment comment '主键',
+item_name varchar(50) not null comment '支出项目名称',
+pay_amount varchar(12) not null comment '支出金额',
+subitem_name varchar(50) comment '支出用途',
+pay_date varchar(12) comment '支出日期',
+pay_person varchar(15) not null comment '支出人员',
+contant varchar(500)  comment '备注',
+add_time timestamp default current_timestamp comment '添加时间'
+);
+
+
+================================支出主题表 f_payPerson  ==================
+【1】表结构说明
+pay_person_id int(5) 主键，自增
+pay_person_name varchar(60) 支出主体，非空，唯一约束
+【2】建表语句
+create table f_payPerson(
+pay_person_id int(5) primary key auto_increment  comment '主键',
+pay_person_name varchar(60) not null comment '支出主体',
+constraint payPerson_unq_paypersonname unique(pay_person_name)
+);
+
+
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/lrh.iml" filepath="$PROJECT_DIR$/lrh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lrh-bussiness/lrh-bussiness.iml" filepath="$PROJECT_DIR$/lrh-bussiness/lrh-bussiness.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lrh-component/lrh-component.iml" filepath="$PROJECT_DIR$/lrh-component/lrh-component.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lrh-web/lrh-web.iml" filepath="$PROJECT_DIR$/lrh-web/lrh-web.iml" />
+    </modules>
+  </component>
+</project>
