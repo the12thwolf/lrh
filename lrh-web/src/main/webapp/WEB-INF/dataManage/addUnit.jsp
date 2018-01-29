@@ -49,9 +49,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
         <!--主要区域结束-->
         <div id="footer">
-            <span>[源自北美的技术，最优秀的师资，最真实的企业环境，最适用的实战项目]</span>
+            <span>我希望一切都好</span>
             <br />
-            <span>版权所有(C)加拿大达内IT培训集团公司 </span>
+            <span>邮箱:the12thwolf@126.com  &nbsp;&nbsp;&nbsp;&nbsp; QQ:361091308 &nbsp;&nbsp;&nbsp;&nbsp;
+		微信:361091308 &nbsp;&nbsp;&nbsp;&nbsp; 手机:13952023017 </span>
         </div>
     </body>
 </html>
