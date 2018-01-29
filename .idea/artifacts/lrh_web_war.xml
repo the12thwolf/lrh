@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="lrh-web:war">
-    <output-path>$PROJECT_DIR$/lrh-web/target</output-path>
-    <root id="archive" name="lrh-web.war">
-      <element id="artifact" artifact-name="lrh-web:war exploded" />
-    </root>
-  </artifact>
-</component>
