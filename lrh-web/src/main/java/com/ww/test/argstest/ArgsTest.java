@@ -8,6 +8,7 @@ public class ArgsTest {
         System.out.println(argsSum(1,2,3,4,5,6,7,8,9,10));
     }
     public static int  argsSum(int... values){
+        if(values==null)return 0;
         int sum=0;
         for(int value:values) sum +=value;
         return sum;
